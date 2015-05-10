@@ -1,0 +1,5 @@
+manage.py
+django_udf/
+usage/
+*.pyc
+*.sqlite3
