@@ -3,3 +3,4 @@ django_udf/
 usage/
 *.pyc
 *.sqlite3
+migrations/

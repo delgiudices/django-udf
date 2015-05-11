@@ -12,6 +12,7 @@ class UDF(models.Model):
     content_type = models.ForeignKey(ContentType)
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=100)
+    required = models.BooleanField(default=False)
 
 
 class UDFIterator(ModelIterator):
