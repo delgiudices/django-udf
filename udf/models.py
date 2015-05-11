@@ -63,4 +63,16 @@ class UDFModel(models.Model):
         for field in custom_fields:
             setattr(self, field.name, kwargs.pop(field.name, None))
 
-        return super(UDFModel, self).__init__(*args, **kwargs)
+        instance = super(UDFModel, self).__init__(*args, **kwargs)
+        for key, val in self.udfs.items():
+            setattr(self, key, val)
+
+        return instance
+
+    def save(self, *args, **kwargs):
+        custom_fields = UDF.objects.filter(
+            content_type=ContentType.objects.get_for_model(self.__class__))
+
+        for field in custom_fields:
+            self.udfs[field.name] = getattr(self, field.name, None)
+        super(UDFModel, self).save(*args, **kwargs)
