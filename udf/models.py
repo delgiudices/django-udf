@@ -3,7 +3,6 @@ from django.contrib.contenttypes.models import ContentType
 from jsonfield import JSONField
 from django.db.models.query import ModelIterator
 
-
 class UDF(models.Model):
 
     def __str__(self):
