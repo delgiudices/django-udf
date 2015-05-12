@@ -9,11 +9,11 @@ python:
   - "pypy"
 # command to install dependencies
 install:
-  - git clone git://github.com/django/django.git django-trunk
-  - pip install -e django-trunk/
+  - git clone git://github.com/django/django.git ../django-trunk
+  - pip install -e ../django-trunk/
   - pip install -r requirements.txt
   - pip install flake8
 # command to run tests
 script:
-  - flake8 delgiudices/django-udf
+  - flake8 .
   - python runtests.py
