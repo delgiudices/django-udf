@@ -3,15 +3,16 @@ from django.contrib.contenttypes.models import ContentType
 from jsonfield import JSONField
 from django.db.models.query import ModelIterator
 
-class UDF(models.Model):
 
-    def __str__(self):
-        return "%s's %s" % (self.content_type, self.name)
+class UDF(models.Model):
 
     content_type = models.ForeignKey(ContentType)
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=100)
     required = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s's %s" % (self.content_type, self.name)
 
 
 class UDFIterator(ModelIterator):
@@ -42,7 +43,7 @@ class UDFModelManager(models.Manager):
 
         udfs = {}
         for field in custom_fields:
-            udfs[field.name] = kwargs[field.name]
+            udfs[field.name] = kwargs.get(field.name, None)
 
         kwargs['udfs'] = udfs
         return super(UDFModelManager, self).create(*args, **kwargs)
@@ -76,3 +77,7 @@ class UDFModel(models.Model):
         for field in custom_fields:
             self.udfs[field.name] = getattr(self, field.name, None)
         super(UDFModel, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_content_type(cls):
+        return ContentType.objects.get_for_model(cls)

@@ -16,6 +16,8 @@ if not settings.configured:
             }
         },
         INSTALLED_APPS=(
+            'django.contrib.contenttypes',
+            'udf',
             'tests',
         ),
         MIDDLEWARE_CLASSES=(
